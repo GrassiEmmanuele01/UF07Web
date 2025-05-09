@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager - Avanzato</title>
+    <link rel="stylesheet" href="../style/task-manager-advanced.css">
+    <script src="../js/task-manager-advanced.js"></script>
+</head>
+<body>
+    <h1>Task Manager - Avanzato</h1>
+  <input type="text" id="taskInput" placeholder="Inserisci un'attività">
+  <button onclick="addTask()">Aggiungi</button>
+
+  <div class="filters">
+    <label>Filtra per stato:</label>
+    <select id="filterStatus" onchange="filterTasks()">
+      <option value="all">Tutti</option>
+      <option value="todo">Da fare</option>
+      <option value="inprogress">In corso</option>
+      <option value="completed">Completata</option>
+    </select>
+    <input type="text" id="searchInput" placeholder="Cerca per nome" oninput="filterTasks()">
+  </div>
+
+  <div class="task-list" id="taskList"></div>
+</body>
+</html>
