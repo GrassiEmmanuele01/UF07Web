@@ -1,4 +1,5 @@
  const tasks = [];
+ let filteredTasks = tasks; 
 
 function addTask() {
   const taskInput = document.getElementById("taskInput");
@@ -34,18 +35,29 @@ function renderTasks(filteredTasks = tasks) {
 }
 
 function updateTask(index, newName) {
-  tasks[index].name = newName;
-  renderTasks();
+  if (newName && newName.trim() !== "") {
+    const taskIndex = tasks.indexOf(filteredTasks[index]);
+    if (taskIndex !== -1) {
+      tasks[taskIndex].name = newName.trim();
+      filterTasks();
+    }
+  }
 }
 
 function changeStatus(index, newStatus) {
-    tasks[index].status = newStatus;
-    renderTasks();
+  const taskIndex = tasks.indexOf(filteredTasks[index]);
+  if (taskIndex !== -1) {
+    tasks[taskIndex].status = newStatus;
+    filterTasks();
+  }
 }
 
 function removeTask(index) {
-  tasks.splice(index, 1);
-  renderTasks();
+  const taskIndex = tasks.indexOf(filteredTasks[index]);
+  if (taskIndex !== -1) {
+    tasks.splice(taskIndex, 1);
+    filterTasks();
+  }
 }
 
 function filterTasks() {
@@ -54,12 +66,19 @@ function filterTasks() {
     .getElementById("searchInput")
     .value.toLowerCase();
 
-  const filteredTasks = tasks.filter((task) => {
+  filteredTasks = tasks.filter((task) => {
     const matchesStatus =
-    filterStatus === "all" || task.status === filterStatus;
+      filterStatus === "all" || task.status === filterStatus;
     const matchesSearch = task.name.toLowerCase().includes(searchQuery);
     return matchesStatus && matchesSearch;
-    });
+  });
 
-    renderTasks(filteredTasks);
+  renderTasks(filteredTasks);
+}
+
+
+function resetFilters() {
+  document.getElementById("filterStatus").value = "all";
+  document.getElementById("searchInput").value = "";
+  filterTasks();
 }
