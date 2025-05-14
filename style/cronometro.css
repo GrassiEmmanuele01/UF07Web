@@ -36,3 +36,22 @@ button:hover {
     background-color: #27ae60;
     transform: scale(1.05);
 }
+
+.laps {
+    margin-top: 30px;
+    text-align: left;
+    max-width: 600px;
+    margin: 0 auto;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.lap-item {
+    margin-bottom: 5px;
+    font-size: 1rem;
+    color: #555;
+}
