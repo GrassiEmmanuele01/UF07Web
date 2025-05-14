@@ -39,3 +39,7 @@ button:hover {
     background-color: #16a085;
     transform: scale(1.05); 
 }
+
+.weather-icon {
+    font-size: 48px;
+}
