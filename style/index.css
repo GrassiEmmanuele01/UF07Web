@@ -17,6 +17,7 @@ h1,
 h2,
 h3 {
     color: #2c3e50;
+    margin-bottom: 20px;
 }
 
 button {
@@ -28,6 +29,7 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin: 5px;
 }
 
 button:hover {
@@ -48,14 +50,33 @@ input[type="text"] {
     max-width: 800px;
     margin: 0 auto;
     text-align: left;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.back-to-home {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 14px;
+    color: #3498db;
+    text-decoration: none;
+}
+
+.back-to-home:hover {
+    text-decoration: underline;
 }
 
 .task-list,
 .laps,
 .weather-info {
     margin-top: 20px;
-    padding: 10px;
-    background-color: #fff;
+    padding: 15px;
+    background-color: #ecf0f1;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
@@ -65,7 +86,19 @@ input[type="text"] {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.task-item button,
+.lap-item button {
+    background-color: #e74c3c;
+    margin-left: 10px;
+}
+
+.task-item button:hover,
+.lap-item button:hover {
+    background-color: #c0392b;
 }
 
 .filters {
@@ -78,11 +111,14 @@ input[type="text"] {
     padding: 5px;
     font-size: 14px;
     margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 a {
     color: #3498db;
     text-decoration: none;
+    margin: 10px;
 }
 
 a:hover {
