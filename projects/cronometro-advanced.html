@@ -1,23 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cronometro - Avanzato</title>
   <link rel="stylesheet" href="../style/index.css">
   <link rel="stylesheet" href="../style/cronometro.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css ">
 </head>
 <body>
   <a href="../index.html" class="back-to-home">Torna alla Home</a>
-  
-  <h1>Cronometro - Avanzato</h1>
-  <div id="timer">00:00:000</div>
-  <button onclick="startTimer()">Start</button>
-  <button onclick="stopTimer()">Stop</button>
-  <button onclick="resetTimer()">Reset</button>
-  <button onclick="saveLap()">Giro</button>
 
+  <h1>Cronometro - Avanzato</h1>
+
+  <!-- Timer principale -->
+  <div id="timer">00:00:000</div>
+
+  <!-- Timer extra -->
+  <div id="extra-timers">
+    <p><strong>Tempo Giro:</strong> <span id="lapTime">00:00:000</span></p>
+    <p><strong>Tempo Totale:</strong> <span id="totalTimeDisplay">00:00:000</span></p>
+    <p><strong>Miglior Giro:</strong> <span id="bestLap">--:--:---</span></p>
+  </div>
+
+  <!-- Pulsanti -->
+  <div class="controls">
+    <button onclick="startTimer()" class="btn-start"><i class="fas fa-play"></i> Start</button>
+    <button onclick="stopTimer()" class="btn-stop" disabled><i class="fas fa-stop"></i> Stop</button>
+    <button onclick="resetTimer()" class="btn-reset" disabled><i class="fas fa-sync-alt"></i> Reset</button>
+    <button onclick="saveLap()" class="btn-lap" disabled><i class="fas fa-flag-checkered"></i> Giro</button>
+    <button onclick="endRace()" class="btn-end" disabled><i class="fas fa-flag"></i> Fine Corsa</button>
+  </div>
+
+  <!-- Lista giri -->
   <div class="laps" id="lapsList"></div>
+
+  <!-- Riepilogo corsa -->
+  <div id="raceSummary" class="hidden">
+    <h2>Riepilogo Corsa</h2>
+    <ul id="summaryDetails"></ul>
+  </div>
 
   <script src="../js/cronometro-advanced.js"></script>
 </body>

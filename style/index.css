@@ -122,4 +122,42 @@ a {
 }
 
 a:hover {
-    text-decoration: underline; }
+    text-decoration: underline;
+}
+
+/* ===== Layout a 3 colonne per la homepage ===== */
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 colonne */
+    gap: 20px;
+    /* spazio tra le colonne */
+    margin-top: 30px;
+}
+
+.project-column {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.project-column h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.project-column .button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.project-column button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+}
