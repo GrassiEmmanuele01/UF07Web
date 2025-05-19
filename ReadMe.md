@@ -1,116 +1,97 @@
-# EG-EsameUF07
+# UF07Web – Progetto Web con Esercizi Interattivi
 
-## Descrizione del Progetto
+Questo progetto contiene tre applicazioni web sviluppate con **HTML**, **CSS** e **JavaScript**, ognuna in due versioni: **base** e **avanzata**.
 
-Questo repository contiene i progetti realizzati per l'unità formativa UF07 (Web) del corso AFPMarconi, docente Pietro Rocchio. L'obiettivo è mostrare competenze nello sviluppo di applicazioni web front-end tramite HTML, CSS e JavaScript, con particolare attenzione a logica, interattività e stile.
+---
 
-## Struttura del Progetto
+## 📁 Struttura del progetto
 
 ```
 UF07Web/
 │
-├── index.html                # Pagina principale per la selezione dei progetti
-├── projects/                 # Pagine HTML dei singoli progetti
-│     ├── task-manager-base.html
-│     ├── task-manager-advanced.html
-│     ├── cronometro-base.html
-│     ├── cronometro-advanced.html
-│     ├── meteo-base.html
-│     └── meteo-advanced.html
-├── js/                       # File JavaScript per la logica dei progetti
-│     ├── task-manager-base.js
-│     ├── task-manager-advanced.js
-│     ├── cronometro-base.js
-│     ├── cronometro-advanced.js
-│     ├── meteo-base.js
-│     └── meteo-advanced.js
-├── style/                    # File CSS per la grafica dei progetti
-│     ├── index.css
-│     ├── task-manager.css
-│     ├── cronometro.css
-│     └── meteo.css
-└── ReadMe.md                 # Documentazione del progetto
+├── index.html                # Homepage con link ai progetti
+├── js/                       # Logica JavaScript per ogni app
+│   ├── task-manager-base.js
+│   ├── task-manager-advanced.js
+│   ├── cronometro-base.js
+│   ├── cronometro-advanced.js
+│   ├── meteo-base.js
+│   └── meteo-advanced.js
+├── style/                    # Stili CSS per ogni app
+│   ├── task-manager.css
+│   ├── cronometro.css
+│   ├── meteo.css
+│   └── index.css
+└── projects/                 # Pagine HTML dei singoli progetti
+    ├── task-manager-base.html
+    ├── task-manager-advanced.html
+    ├── cronometro-base.html
+    ├── cronometro-advanced.html
+    ├── meteo-base.html
+    └── meteo-advanced.html
 ```
 
-## Progetti Inclusi
+---
 
-- **Task Manager - Base**: Gestione semplice di una lista di attività.
-- **Task Manager - Avanzato**: Gestione avanzata con filtri, ricerca, modifica stato e nome delle attività.
-- **Cronometro - Base**: Cronometro semplice con start, stop e reset.
-- **Cronometro - Avanzato**: Cronometro con misurazione millisecondi e salvataggio dei giri.
-- **Meteo App - Base**: Visualizzazione delle condizioni meteo di una posizione fissa.
-- **Meteo App - Avanzato**: Visualizzazione delle condizioni meteo della posizione attuale tramite geolocalizzazione.
+## 📌 Moduli presenti
 
-## Modalità di Utilizzo
+### ✅ Task Manager
 
-1. Apri `index.html` in un browser.
-2. Seleziona il progetto desiderato tramite i pulsanti.
-3. Ogni progetto è autonomo e può essere utilizzato direttamente dalla relativa pagina.
+- **Base:** aggiunta ed eliminazione di attività
+- **Avanzata:** completamento, filtri, ricerca, modifica, conteggio attività, eliminazione definitiva e ripristino
 
-## Dipendenze
+### ⏱️ Cronometro
 
-- Tutti i progetti sono realizzati in HTML, CSS e JavaScript puro, senza dipendenze esterne.
-- Le API utilizzate sono gratuite e non richiedono autenticazione.
+- **Base:** start, stop, reset
+- **Avanzata:** giri (lap), resume, lista giri, riepilogo corsa
 
-## API Utilizzate
+### 🌤️ MeteoApp
 
-### Open-Meteo API
-- **Endpoint:** `https://api.open-meteo.com/v1/forecast`
-- **Utilizzo:** Recupero delle condizioni meteo attuali (temperatura, umidità, precipitazioni, pioggia, copertura nuvole, vento, codice meteo).
-- **Esempio di richiesta:**
-  ```
-  https://api.open-meteo.com/v1/forecast?latitude=46.0679&longitude=11.1211&current=temperature_2m,relative_humidity_2m,precipitation,rain,cloud_cover,wind_speed_10m
-  ```
+- **Base:** meteo per posizione fissa (temperatura, umidità, pioggia, vento, ecc.)
+- **Avanzata:** meteo per posizione attuale tramite geolocalizzazione, dettagli meteo, icone, elenco città famose
 
-### OpenStreetMap Nominatim
-- **Endpoint:** `https://nominatim.openstreetmap.org/reverse`
-- **Utilizzo:** Reverse geocoding per ottenere il nome della città a partire da coordinate geografiche.
-- **Esempio di richiesta:**
-  ```
-  https://nominatim.openstreetmap.org/reverse?format=json&lat=46.0679&lon=11.1211&zoom=18&addressdetails=1
-  ```
+---
 
-### Geolocalizzazione Browser
-- **API:** `navigator.geolocation`
-- **Utilizzo:** Ottenere la posizione attuale dell’utente per mostrare il meteo locale.
+## 🛠️ Come usare
 
-## Documentazione Tecnica e JSDoc
+Apri `index.html` in un browser e seleziona l'app che vuoi testare.  
+Tutti i progetti funzionano **senza server**.
 
-Tutti i file JavaScript sono documentati con commenti in stile JSDoc. Esempio per il cronometro base:
+---
 
-```js
-/**
- * Aggiorna lo stato dei pulsanti Start, Stop e Reset in base allo stato del timer.
- */
-function updateButtonStates() { ... }
+## 👨‍💻 Per sviluppatori
 
-/**
- * Avvia il cronometro. Se è già in corso una corsa precedente, la resetta.
- */
-function startTimer() { ... }
+- I file JS seguono la convenzione `nome-funzionalità-versione.js`
+- Tutte le funzioni sono documentate con **JSDoc**
+- Commit organizzati secondo [Conventional Commits](https://www.conventionalcommits.org/it/v1.0.0/)
+- Stile minimale ma responsivo per ogni app
+- Le API meteo sono fornite da **Open-Meteo** (servizio gratuito, senza chiave)
+- Per il reverse geocoding viene usato **OpenStreetMap Nominatim**
+- Nessuna dipendenza esterna: solo HTML, CSS, JS puro
 
-/**
- * Ferma il cronometro e aggiorna lo stato dei pulsanti.
- */
-function stopTimer() { ... }
+---
 
-/**
- * Reimposta il cronometro a zero e aggiorna la visualizzazione.
- */
-function resetTimer() { ... }
+## 📚 API Utilizzate
 
-/**
- * Aggiorna la visualizzazione del timer nel formato mm:ss.
- */
-function updateTimer() { ... }
-```
+- **Open-Meteo API:**  
+  https://api.open-meteo.com/v1/forecast  
+  Recupero delle condizioni meteo attuali (temperatura, umidità, precipitazioni, pioggia, copertura nuvole, vento, codice meteo).
 
-## Altre Informazioni Utili
+- **OpenStreetMap Nominatim:**  
+  https://nominatim.openstreetmap.org/reverse  
+  Reverse geocoding per ottenere il nome della città a partire da coordinate geografiche.
 
-- **Responsive Design:** Tutte le pagine sono ottimizzate per dispositivi desktop e mobile.
-- **Accessibilità:** I pulsanti sono accessibili tramite tastiera e hanno un contrasto adeguato.
-- **Facilità di Estensione:** La struttura a cartelle e la modularità del codice facilitano l'aggiunta di nuove funzionalità o progetti.
-- **Stile:** I CSS sono suddivisi per progetto per una migliore manutenzione e personalizzazione.
+- **Geolocalizzazione Browser:**  
+  `navigator.geolocation`  
+  Ottenere la posizione attuale dell’utente per mostrare il meteo locale.
+
+---
+
+## ℹ️ Altre informazioni
+
+- **Responsive Design:** Tutte le pagine sono ottimizzate per desktop e mobile.
+- **Accessibilità:** I pulsanti sono accessibili tramite tastiera e hanno contrasto adeguato.
+- **Facilità di estensione:** La struttura a cartelle e la modularità del codice facilitano l'aggiunta di nuove funzionalità.
 - **Sicurezza:** Non vengono richiesti dati sensibili e tutte le API usate sono pubbliche.
 
 ---
