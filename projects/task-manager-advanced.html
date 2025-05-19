@@ -26,7 +26,26 @@
     <button onclick="resetFilters()">Reset Filtri</button>
   </div>
 
-  <div class="task-list" id="taskList"></div>
+  <div class="task-columns">
+    <div class="task-column">
+      <h2>Da Fare</h2>
+      <ul id="todoList"></ul>
+    </div>
+    <div class="task-column">
+      <h2>In Corso</h2>
+      <ul id="inProgressList"></ul>
+    </div>
+    <div class="task-column">
+      <h2>Completata</h2>
+      <ul id="completedList"></ul>
+    </div>
+  </div>
+
+  <!-- Footer per le attività eliminate -->
+  <footer class="deleted-footer">
+    <h2>Eliminati</h2>
+    <ul id="deletedList"></ul>
+  </footer>
 
   <script src="../js/task-manager-advanced.js"></script>
 </body>

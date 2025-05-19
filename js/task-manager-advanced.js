@@ -1,5 +1,5 @@
 const tasks = [];
-let filteredTasks = [...tasks];
+const deletedTasks = [];
 
 function addTask() {
   const taskInput = document.getElementById("taskInput");
@@ -14,50 +14,73 @@ function addTask() {
 }
 
 function renderTasks(filteredTasks = tasks) {
-  const taskList = document.getElementById("taskList");
-  taskList.innerHTML = "";
+  const todoList = document.getElementById("todoList");
+  const inProgressList = document.getElementById("inProgressList");
+  const completedList = document.getElementById("completedList");
+  const deletedList = document.getElementById("deletedList");
 
+  // Pulisce le liste
+  todoList.innerHTML = "";
+  inProgressList.innerHTML = "";
+  completedList.innerHTML = "";
+  deletedList.innerHTML = "";
+
+  // Distribuisce le attività nelle liste corrispondenti
   filteredTasks.forEach((task, index) => {
-    const taskItem = document.createElement("div");
-    taskItem.className = "task-item status-" + task.status;
-    taskItem.innerHTML = `
+    const listItem = document.createElement("li");
+    listItem.className = `status-${task.status}`;
+    listItem.innerHTML = `
       <div class="task-content">
-        <div class="task-icon">
-          ${getTaskIcon(task.status)}
-        </div>
         <span>${task.name}</span>
       </div>
       <div class="task-actions">
-        <button onclick="updateTask(${tasks.indexOf(
-          task
-        )}, prompt('Nuovo nome:', '${task.name}'))">Modifica</button>
-        <button onclick="changeStatus(${tasks.indexOf(
-          task
-        )}, 'todo')">Da fare</button>
-        <button onclick="changeStatus(${tasks.indexOf(
-          task
-        )}, 'inprogress')">In corso</button>
-        <button onclick="changeStatus(${tasks.indexOf(
-          task
-        )}, 'completed')">Completata</button>
-        <button onclick="removeTask(${tasks.indexOf(task)})">Rimuovi</button>
+        <button class="edit-task" onclick="updateTask(${index}, prompt('Nuovo nome:', '${
+      task.name
+    }'))">Modifica ✏️</button>
+        ${
+          task.status !== "todo"
+            ? `<button class="todo" onclick="changeStatus(${index}, 'todo')">Da fare ⏳</button>`
+            : `<button class="todo disabled" disabled>Da fare ⏳</button>`
+        }
+        ${
+          task.status !== "inprogress"
+            ? `<button class="inprogress" onclick="changeStatus(${index}, 'inprogress')">In corso 🚀</button>`
+            : `<button class="inprogress disabled" disabled>In corso 🚀</button>`
+        }
+        ${
+          task.status !== "completed"
+            ? `<button class="completed" onclick="changeStatus(${index}, 'completed')">Completata ✅</button>`
+            : `<button class="completed disabled" disabled>Completata ✅</button>`
+        }
+        <button class="remove-task" onclick="removeTask(${index})">Rimuovi ❌</button>
       </div>
     `;
-    taskList.appendChild(taskItem);
-  });
-}
 
-function getTaskIcon(status) {
-  switch (status) {
-    case "todo":
-      return `<svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="9" fill="#e74c3c"/></svg>`;
-    case "inprogress":
-      return `<svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="9" fill="#f1c40f"/><path fill="none" stroke="#2c3e50" stroke-width="2" d="M12 6v6l4 2"/></svg>`;
-    case "completed":
-      return `<svg viewBox="0 0 24 24" width="20" height="20"><circle cx="12" cy="12" r="9" fill="#2ecc71"/><path fill="none" stroke="white" stroke-width="2" d="M8 12l3 3 5-5"/></svg>`;
-    default:
-      return "";
-  }
+    // Aggiunge l'attività alla lista corrispondente
+    if (task.status === "todo") {
+      todoList.appendChild(listItem);
+    } else if (task.status === "inprogress") {
+      inProgressList.appendChild(listItem);
+    } else if (task.status === "completed") {
+      completedList.appendChild(listItem);
+    }
+  });
+
+  // Gestione delle attività eliminate
+  deletedTasks.forEach((task, index) => {
+    const deletedItem = document.createElement("li");
+    deletedItem.className = "status-deleted";
+    deletedItem.innerHTML = `
+      <div class="task-content">
+        <span>${task.name}</span>
+      </div>
+      <div class="task-actions">
+        <button class="restore-task" onclick="restoreTask(${index})">Ripristina 🔄</button>
+        <button class="delete-permanently" onclick="deletePermanently(${index})">Rimuovi definitivamente 🗑️</button>
+      </div>
+    `;
+    deletedList.appendChild(deletedItem);
+  });
 }
 
 function updateTask(originalIndex, newName) {
@@ -78,8 +101,28 @@ function changeStatus(originalIndex, newStatus) {
 
 function removeTask(originalIndex) {
   if (originalIndex >= 0 && originalIndex < tasks.length) {
-    tasks.splice(originalIndex, 1);
-    filterTasks();
+    const removedTask = tasks.splice(originalIndex, 1)[0];
+    deletedTasks.push(removedTask);
+    renderTasks();
+  }
+}
+
+function restoreTask(deletedIndex) {
+  if (deletedIndex >= 0 && deletedIndex < deletedTasks.length) {
+    const restoredTask = deletedTasks.splice(deletedIndex, 1)[0];
+    tasks.push(restoredTask);
+    renderTasks();
+  }
+}
+
+function deletePermanently(deletedIndex) {
+  if (
+    confirm("Sei sicuro di voler rimuovere definitivamente questa attività?")
+  ) {
+    if (deletedIndex >= 0 && deletedIndex < deletedTasks.length) {
+      deletedTasks.splice(deletedIndex, 1);
+      renderTasks();
+    }
   }
 }
 
@@ -89,7 +132,7 @@ function filterTasks() {
     .getElementById("searchInput")
     .value.toLowerCase();
 
-  filteredTasks = tasks.filter((task) => {
+  const filteredTasks = tasks.filter((task) => {
     const matchesStatus =
       filterStatus === "all" || task.status === filterStatus;
     const matchesSearch = task.name.toLowerCase().includes(searchQuery);
