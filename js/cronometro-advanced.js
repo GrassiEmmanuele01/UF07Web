@@ -2,6 +2,7 @@ let timerInterval;
 let startTime = null;
 let lapStartTime = null;
 let totalElapsedTime = 0;
+let hasRunAtLeastOnce = false; // Nuova variabile di stato
 
 const laps = [];
 
@@ -26,16 +27,23 @@ function updateButtonStates() {
     lapBtn.disabled = true;
     endBtn.disabled = true;
 
-    // Reset disponibile dopo Stop o Fine Corsa
+    // Reset disponibile dopo Stop, giro o Fine Corsa
     const raceSummaryVisible = !document
       .getElementById("raceSummary")
       .classList.contains("hidden");
-    resetBtn.disabled = !(laps.length > 0 || raceSummaryVisible);
+
+    resetBtn.disabled = !(
+      laps.length > 0 ||
+      raceSummaryVisible ||
+      hasRunAtLeastOnce
+    );
   }
 }
 
 function startTimer() {
   if (timerInterval) return;
+
+  hasRunAtLeastOnce = true; // Segna che è partito almeno una volta
 
   // Se è stata fatta una corsa completa, azzera tutto
   if (!document.getElementById("raceSummary").classList.contains("hidden")) {
@@ -73,6 +81,7 @@ function resetTimer() {
   startTime = null;
   lapStartTime = null;
   totalElapsedTime = 0;
+  hasRunAtLeastOnce = false; // Resetta lo stato
 
   updateTimer(0);
   updateLapTimer(0);
