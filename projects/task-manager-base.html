@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Task Manager - Base</title>
-        <link rel="stylesheet" href="../style/index.css">
-        <link rel="stylesheet" href="../style/task-manager.css">       
-    </head>
-    <body>
-        <a href="../index.html" class="back-to-home">Torna alla Home</a>
-        
-        <h1>Task Manager - Base</h1>
-        <input type="text" id="inputTask" placeholder="Inserisci attività">
-        <button onclick="addTask()">Aggiungi</button>
-        <div class="task-list" id="taskList"></div>
-    
-        <script src="../js/task-manager-base.js"></script> 
-    </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Manager - Base</title>
+  <link rel="stylesheet" href="../style/index.css">
+  <link rel="stylesheet" href="../style/task-manager.css">       
+</head>
+<body>
+  <a href="../index.html" class="back-to-home">Torna alla Home</a>
+  
+  <h1>Task Manager - Base</h1>
+  <input type="text" id="inputTask" placeholder="Inserisci attività">
+  <button class="add-task" onclick="addTask()">Aggiungi</button>
+
+  <!-- Contenitore principale -->
+  <div class="task-list" id="taskList">
+    <h2>To Do list</h2>
+    <ul id="taskItems"></ul>
+  </div>
+
+  <!-- Sezione per le attività eliminate -->
+  <footer class="deleted-footer">
+    <h2>Eliminati di recente</h2>
+    <ul id="deletedList"></ul>
+  </footer>
+
+  <script src="../js/task-manager-base.js"></script> 
+</body>
 </html>
