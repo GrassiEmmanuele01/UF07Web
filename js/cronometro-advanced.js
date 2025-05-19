@@ -6,6 +6,9 @@ let hasRunAtLeastOnce = false; // Nuova variabile di stato
 
 const laps = [];
 
+/**
+ * Aggiorna lo stato dei pulsanti in base allo stato del cronometro.
+ */
 function updateButtonStates() {
   const startBtn = document.querySelector(".btn-start");
   const stopBtn = document.querySelector(".btn-stop");
@@ -40,6 +43,9 @@ function updateButtonStates() {
   }
 }
 
+/**
+ * Avvia il cronometro. Se è già in corso una corsa precedente, la resetta.
+ */
 function startTimer() {
   if (timerInterval) return;
 
@@ -70,12 +76,18 @@ function startTimer() {
   updateButtonStates();
 }
 
+/**
+ * Ferma il cronometro e aggiorna lo stato dei pulsanti.
+ */
 function stopTimer() {
   clearInterval(timerInterval);
   timerInterval = null;
   updateButtonStates();
 }
 
+/**
+ * Reimposta il cronometro e la visualizzazione.
+ */
 function resetTimer() {
   stopTimer();
   startTime = null;
@@ -95,6 +107,9 @@ function resetTimer() {
   updateButtonStates();
 }
 
+/**
+ * Salva il tempo del giro corrente e aggiorna la lista dei giri.
+ */
 function saveLap() {
   const now = Date.now();
   const lapTime = now - lapStartTime;
@@ -107,6 +122,9 @@ function saveLap() {
   renderLaps();
 }
 
+/**
+ * Termina la corsa, mostra il riepilogo e ferma il cronometro.
+ */
 function endRace() {
   saveLap(); // Salva l'ultimo giro
   stopTimer();
@@ -128,6 +146,10 @@ function endRace() {
   updateButtonStates();
 }
 
+/**
+ * Calcola i dati riepilogativi della corsa.
+ * @returns {Object} Oggetto con totalLaps, totalTime, bestLap, worstLap, averageLap.
+ */
 function calculateRaceSummary() {
   if (laps.length === 0) return {};
 
@@ -140,14 +162,25 @@ function calculateRaceSummary() {
   return { totalLaps, totalTime, bestLap, worstLap, averageLap };
 }
 
+/**
+ * Aggiorna la visualizzazione del timer principale.
+ * @param {number} ms - Millisecondi trascorsi.
+ */
 function updateTimer(ms) {
   document.getElementById("timer").textContent = formatTime(ms);
 }
 
+/**
+ * Aggiorna la visualizzazione del timer del giro corrente.
+ * @param {number} ms - Millisecondi del giro.
+ */
 function updateLapTimer(ms) {
   document.getElementById("lapTime").textContent = formatTime(ms);
 }
 
+/**
+ * Aggiorna la lista dei giri e i dati riepilogativi.
+ */
 function renderLaps() {
   const lapsList = document.getElementById("lapsList");
   lapsList.innerHTML = "";
@@ -175,6 +208,11 @@ function renderLaps() {
   });
 }
 
+/**
+ * Formatta i millisecondi nel formato mm:ss:ms.
+ * @param {number} ms - Millisecondi.
+ * @returns {string} Tempo formattato.
+ */
 function formatTime(ms) {
   const minutes = Math.floor(ms / 60000)
     .toString()

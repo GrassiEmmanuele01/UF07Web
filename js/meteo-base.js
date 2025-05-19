@@ -2,7 +2,10 @@
 const latitude = 46.0679; // Trento
 const longitude = 11.1211;
 
-// Funzione per ottenere il meteo e il nome della città
+/**
+ * Ottiene il meteo e il nome della città per le coordinate specificate.
+ * Aggiorna la visualizzazione o mostra un errore.
+ */
 async function fetchWeather() {
   const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,precipitation,rain,cloud_cover,wind_speed_10m`;
 
@@ -26,7 +29,12 @@ async function fetchWeather() {
   }
 }
 
-// Funzione per recuperare il nome della città usando OpenStreetMap Nominatim
+/**
+ * Recupera il nome della città usando OpenStreetMap Nominatim.
+ * @param {number} lat - Latitudine.
+ * @param {number} lon - Longitudine.
+ * @returns {Promise<string>} Nome della città o località.
+ */
 async function reverseGeocode(lat, lon) {
   const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`;
 
@@ -48,7 +56,11 @@ async function reverseGeocode(lat, lon) {
   }
 }
 
-// Funzione per visualizzare i dati del meteo + nome della città
+/**
+ * Visualizza i dati del meteo e il nome della città.
+ * @param {Object} data - Dati meteo.
+ * @param {string} city - Nome della città.
+ */
 function displayWeather(data, city) {
   const current = data.current;
 
