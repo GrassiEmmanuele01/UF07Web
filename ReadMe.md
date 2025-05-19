@@ -89,7 +89,6 @@ Tutti i progetti funzionano **senza server**.
 
 ## ℹ️ Altre informazioni
 
-- **Responsive Design:** Tutte le pagine sono ottimizzate per desktop e mobile.
 - **Accessibilità:** I pulsanti sono accessibili tramite tastiera e hanno contrasto adeguato.
 - **Facilità di estensione:** La struttura a cartelle e la modularità del codice facilitano l'aggiunta di nuove funzionalità.
 - **Sicurezza:** Non vengono richiesti dati sensibili e tutte le API usate sono pubbliche.
