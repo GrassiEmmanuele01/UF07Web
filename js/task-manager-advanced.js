@@ -1,3 +1,4 @@
+// Array per le attività attive e quelle eliminate temporaneamente
 const tasks = [];
 const deletedTasks = [];
 
@@ -7,10 +8,12 @@ const deletedTasks = [];
 function addTask() {
   const taskInput = document.getElementById("taskInput");
   const taskName = taskInput.value.trim();
+
   if (taskName === "") {
     alert("Inserisci un nome valido per l'attività!");
     return;
   }
+
   tasks.push({ name: taskName, status: "todo" });
   renderTasks();
   taskInput.value = "";
@@ -32,7 +35,7 @@ function renderTasks(filteredTasks = tasks) {
   completedList.innerHTML = "";
   deletedList.innerHTML = "";
 
-  // Distribuisce le attività nelle liste corrispondenti
+  // Renderizza le attività attive
   filteredTasks.forEach((task, index) => {
     const listItem = document.createElement("li");
     listItem.className = `status-${task.status}`;
@@ -40,10 +43,7 @@ function renderTasks(filteredTasks = tasks) {
       <div class="task-content">
         <span>${task.name}</span>
       </div>
-      <div class="task-actions">
-        <button class="edit-task" onclick="updateTask(${index}, prompt('Nuovo nome:', '${
-      task.name
-    }'))">Modifica ✏️</button>
+      <div class="button-row">
         ${
           task.status !== "todo"
             ? `<button class="todo" onclick="changeStatus(${index}, 'todo')">Da fare ⏳</button>`
@@ -59,29 +59,36 @@ function renderTasks(filteredTasks = tasks) {
             ? `<button class="completed" onclick="changeStatus(${index}, 'completed')">Completata ✅</button>`
             : `<button class="completed disabled" disabled>Completata ✅</button>`
         }
+      </div>
+      <div class="button-row">
+        <button class="edit-task" onclick="updateTask(${index}, prompt('Nuovo nome:', '${task.name}'))">Modifica ✏️</button>
         <button class="remove-task" onclick="removeTask(${index})">Rimuovi ❌</button>
       </div>
     `;
 
     // Aggiunge l'attività alla lista corrispondente
-    if (task.status === "todo") {
-      todoList.appendChild(listItem);
-    } else if (task.status === "inprogress") {
-      inProgressList.appendChild(listItem);
-    } else if (task.status === "completed") {
-      completedList.appendChild(listItem);
+    switch (task.status) {
+      case "todo":
+        todoList.appendChild(listItem);
+        break;
+      case "inprogress":
+        inProgressList.appendChild(listItem);
+        break;
+      case "completed":
+        completedList.appendChild(listItem);
+        break;
+      default:
+        console.error("Stato dell'attività non riconosciuto:", task.status);
     }
   });
 
-  // Gestione delle attività eliminate
+  // Renderizza le attività eliminate
   deletedTasks.forEach((task, index) => {
     const deletedItem = document.createElement("li");
     deletedItem.className = "status-deleted";
     deletedItem.innerHTML = `
-      <div class="task-content">
-        <span>${task.name}</span>
-      </div>
-      <div class="task-actions">
+      <span>${task.name}</span>
+      <div class="button-row">
         <button class="restore-task" onclick="restoreTask(${index})">Ripristina 🔄</button>
         <button class="delete-permanently" onclick="deletePermanently(${index})">Rimuovi definitivamente 🗑️</button>
       </div>
@@ -96,11 +103,16 @@ function renderTasks(filteredTasks = tasks) {
  * @param {string} newName - Nuovo nome dell'attività.
  */
 function updateTask(originalIndex, newName) {
-  if (newName && newName.trim() !== "") {
-    if (originalIndex >= 0 && originalIndex < tasks.length) {
-      tasks[originalIndex].name = newName.trim();
-      filterTasks();
-    }
+  if (!newName || newName.trim() === "") {
+    alert("Il nuovo nome dell'attività non può essere vuoto!");
+    return;
+  }
+
+  if (originalIndex >= 0 && originalIndex < tasks.length) {
+    tasks[originalIndex].name = newName.trim();
+    filterTasks();
+  } else {
+    console.error("Indice dell'attività non valido:", originalIndex);
   }
 }
 
@@ -113,6 +125,8 @@ function changeStatus(originalIndex, newStatus) {
   if (originalIndex >= 0 && originalIndex < tasks.length) {
     tasks[originalIndex].status = newStatus;
     filterTasks();
+  } else {
+    console.error("Indice dell'attività non valido:", originalIndex);
   }
 }
 
@@ -125,6 +139,8 @@ function removeTask(originalIndex) {
     const removedTask = tasks.splice(originalIndex, 1)[0];
     deletedTasks.push(removedTask);
     renderTasks();
+  } else {
+    console.error("Indice dell'attività non valido:", originalIndex);
   }
 }
 
@@ -137,6 +153,8 @@ function restoreTask(deletedIndex) {
     const restoredTask = deletedTasks.splice(deletedIndex, 1)[0];
     tasks.push(restoredTask);
     renderTasks();
+  } else {
+    console.error("Indice dell'attività eliminata non valido:", deletedIndex);
   }
 }
 
@@ -151,6 +169,8 @@ function deletePermanently(deletedIndex) {
     if (deletedIndex >= 0 && deletedIndex < deletedTasks.length) {
       deletedTasks.splice(deletedIndex, 1);
       renderTasks();
+    } else {
+      console.error("Indice dell'attività eliminata non valido:", deletedIndex);
     }
   }
 }
